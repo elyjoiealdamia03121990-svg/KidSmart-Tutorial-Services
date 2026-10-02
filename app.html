@@ -1,0 +1,444 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FFF8EE">
+<title>KidSmart AI Tutor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF8EE;--card:#fff;--ink:#1E2944;--muted:#5D6785;--line:#EEE3D2;--sun:#FFB627;--sun-soft:#FFF0CC;--coral:#FF6B5B;
+  --coral-soft:#FFE3DF;--teal:#20A99A;--teal-soft:#D9F3EF;--sky:#4C8DF6;--sky-soft:#E1ECFE;--shadow:0 6px 24px rgba(30,41,68,.08)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Nunito,system-ui,sans-serif}
+h1,h2,h3{font-family:Fredoka,Nunito,sans-serif;margin:0;line-height:1.2}
+button,input,select{font:700 16px Nunito,sans-serif;color:var(--ink)}
+input,select{width:100%;padding:11px 13px;border:2px solid var(--line);border-radius:12px;background:#fff}
+input:focus,select:focus{outline:none;border-color:var(--teal)}
+label{display:block;font-weight:800;font-size:14px;margin-bottom:5px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;border:0;border-radius:999px;padding:11px 20px;font-weight:800;cursor:pointer;text-decoration:none;background:var(--ink);color:#fff}
+.btn.c{background:var(--coral);box-shadow:0 4px 0 #D94F40}.btn.t{background:var(--teal);box-shadow:0 4px 0 #148073}
+.btn.g{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.btn.sm{padding:7px 14px;font-size:14px}
+.btn:disabled{opacity:.5}
+.wrap{max-width:980px;margin:0 auto;padding:0 16px}
+.top{position:sticky;top:0;z-index:10;background:rgba(255,248,238,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.top .wrap{display:flex;justify-content:space-between;align-items:center;height:60px}
+.brand{font:700 21px Fredoka;display:flex;gap:8px;align-items:center;text-decoration:none;color:var(--ink)}
+.brand b{color:var(--coral)}
+.logo{width:32px;height:32px;border-radius:10px;background:var(--sun);display:grid;place-items:center;font-size:18px;transform:rotate(-6deg)}
+.banner{border-radius:16px;padding:14px 16px;margin:16px 0;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;font-weight:700}
+.banner.trial{background:var(--sun-soft)}.banner.active{background:var(--teal-soft)}.banner.expired{background:var(--coral-soft)}
+h2.sec{font-size:22px;margin:22px 0 12px}
+.kids{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:14px}
+.kid{background:#fff;border-radius:20px;padding:18px;box-shadow:var(--shadow)}
+.kid .hd{display:flex;gap:12px;align-items:center}
+.av{width:58px;height:58px;border-radius:18px;background:var(--sun-soft);display:grid;place-items:center;font-size:34px;flex:none}
+.kid h3{font-size:21px}
+.muted{color:var(--muted)}.small{font-size:13px}
+.meter{height:10px;background:var(--line);border-radius:99px;overflow:hidden;margin:6px 0 2px}
+.meter span{display:block;height:100%;background:var(--teal);border-radius:99px}
+.kid .acts{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.kid .acts .btn{flex:1}
+.addkid{border:3px dashed var(--line);border-radius:20px;display:grid;place-items:center;min-height:180px;cursor:pointer;font:700 18px Fredoka;color:var(--muted);background:transparent}
+.card{background:#fff;border-radius:18px;padding:18px;box-shadow:var(--shadow);margin-bottom:14px}
+.plans{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:12px}
+.plan{border:2px solid var(--line);border-radius:14px;padding:12px;cursor:pointer}
+.plan.on{border-color:var(--coral);background:var(--coral-soft)}
+.plan b{font:700 22px Fredoka;display:block}
+.toggles{display:flex;gap:8px;flex-wrap:wrap}
+.tog{border:2px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;cursor:pointer;font-size:14px}
+.tog.on{background:var(--teal);border-color:var(--teal);color:#fff}
+.paybox{border:2px dashed var(--teal);border-radius:14px;padding:12px 14px;margin:10px 0}
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media(max-width:600px){.g2{grid-template-columns:1fr}}
+.fld{margin-bottom:12px}
+table{width:100%;border-collapse:collapse;font-size:14px}
+td,th{text-align:left;padding:7px 5px;border-bottom:1px solid var(--line)}
+th{font-size:12px;color:var(--muted);text-transform:uppercase}
+.badge{display:inline-block;border-radius:99px;padding:2px 9px;font-size:11px;font-weight:800;text-transform:uppercase}
+.bg-green{background:var(--teal-soft);color:#0F7A6E}.bg-yellow{background:var(--sun-soft);color:#946200}.bg-red{background:var(--coral-soft);color:#A9302A}
+.modal{position:fixed;inset:0;background:rgba(30,41,68,.5);display:none;align-items:flex-start;justify-content:center;padding:24px 12px;overflow:auto;z-index:40}
+.modal.open{display:flex}
+.mbox{background:#fff;border-radius:22px;padding:22px;width:100%;max-width:640px;position:relative}
+.x{position:absolute;right:12px;top:8px;border:0;background:none;font-size:28px;color:var(--muted);cursor:pointer}
+.avs{display:flex;flex-wrap:wrap;gap:6px}
+.avs button{width:48px;height:48px;border-radius:14px;border:2px solid var(--line);background:#fff;font-size:26px;cursor:pointer}
+.avs button.on{border-color:var(--coral);background:var(--coral-soft)}
+.msg{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;font-weight:700}
+.msg.err{display:block;background:var(--coral-soft);color:#A9302A}.msg.ok{display:block;background:var(--teal-soft);color:#0F7A6E}
+.bars{display:flex;align-items:flex-end;gap:4px;height:110px;margin-top:8px}
+.bars div{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;font-size:10px;color:var(--muted);font-weight:700}
+.bars span{width:100%;background:var(--teal);border-radius:5px 5px 2px 2px;min-height:2px}
+.subrow{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--line)}
+.subrow .e{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;font-size:20px;flex:none}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:10px 18px;border-radius:12px;font-weight:700;z-index:99;display:none}
+
+/* ---------------- kid mode */
+#kid{position:fixed;inset:0;z-index:30;background:linear-gradient(180deg,#FFF3D6 0%,#FFE9DD 100%);display:none;flex-direction:column;overflow:auto}
+#kid.open{display:flex}
+.kbar{display:flex;align-items:center;justify-content:space-between;padding:12px 14px;gap:10px}
+.kme{display:flex;align-items:center;gap:8px;font:700 20px Fredoka}
+.kme .av{width:44px;height:44px;font-size:26px;border-radius:14px;background:#fff}
+.kstars{background:#fff;border-radius:99px;padding:6px 14px;font:700 18px Fredoka}
+.kexit{border:0;background:rgba(255,255,255,.7);border-radius:99px;padding:8px 14px;font-weight:800;cursor:pointer;color:var(--muted)}
+.kbody{flex:1;display:flex;flex-direction:column;align-items:center;padding:6px 14px 24px;width:100%;max-width:760px;margin:0 auto}
+.tiles{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;width:100%;margin-top:10px}
+.tile{border:0;border-radius:24px;padding:20px 12px;color:#fff;cursor:pointer;text-align:center;box-shadow:0 6px 0 rgba(0,0,0,.15);transition:transform .1s}
+.tile:active{transform:translateY(3px);box-shadow:0 3px 0 rgba(0,0,0,.15)}
+.tile .e{font-size:46px;display:block}
+.tile b{font:700 20px Fredoka;display:block;margin-top:4px}
+.tile small{font-weight:800;opacity:.9}
+.teacher{display:flex;align-items:flex-start;gap:10px;width:100%;margin:6px 0 12px}
+.owl{width:66px;height:66px;border-radius:50%;background:var(--sun);display:grid;place-items:center;font-size:40px;flex:none;box-shadow:0 4px 0 #D9961A}
+.owl.talk{animation:bob .5s ease-in-out infinite alternate}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-5px)}}
+.speech{background:#fff;border-radius:20px 20px 20px 6px;padding:12px 16px;font:700 18px Nunito;flex:1;box-shadow:var(--shadow);min-height:52px}
+.speak{border:0;background:#fff;border-radius:50%;width:48px;height:48px;font-size:22px;cursor:pointer;box-shadow:var(--shadow);flex:none}
+.dots{display:flex;gap:8px;margin-bottom:12px}
+.dots i{width:14px;height:14px;border-radius:50%;background:rgba(30,41,68,.15)}
+.dots i.ok{background:var(--teal)}.dots i.no{background:var(--coral)}.dots i.cur{background:var(--sun);transform:scale(1.25)}
+.qbox{background:#fff;border-radius:26px;padding:22px 18px;width:100%;text-align:center;box-shadow:var(--shadow);font:700 clamp(28px,7vw,46px) Fredoka;white-space:pre-wrap;word-break:break-word}
+.qbox.long{font:700 clamp(17px,4.2vw,22px)/1.5 Nunito;text-align:left}
+.choices{display:grid;gap:12px;width:100%;margin-top:16px}
+.choice{border:0;background:#fff;border-radius:22px;padding:18px 10px;font:700 clamp(24px,6vw,38px) Fredoka;cursor:pointer;box-shadow:0 6px 0 #E3D5BE;transition:transform .1s;color:var(--ink);word-break:break-word}
+.choice.wordy{font-size:clamp(18px,4.6vw,24px)}
+.choice:active{transform:translateY(3px);box-shadow:0 3px 0 #E3D5BE}
+.choice.ok{background:var(--teal);color:#fff;box-shadow:0 6px 0 #148073}
+.choice.no{background:var(--coral);color:#fff;box-shadow:0 6px 0 #C94434;animation:shake .4s}
+.choice:disabled{cursor:default}
+@keyframes shake{25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
+.loading{text-align:center;margin-top:40px}
+.loading .owl{margin:0 auto 16px;animation:bob .5s ease-in-out infinite alternate;width:96px;height:96px;font-size:58px}
+.big{font:700 clamp(26px,6vw,40px) Fredoka;text-align:center}
+.result{text-align:center;margin-top:20px}
+.result .st{font-size:48px;letter-spacing:6px;margin:14px 0}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:60;overflow:hidden}
+.confetti i{position:absolute;top:-20px;width:10px;height:14px;border-radius:3px;animation:fall 1.4s ease-in forwards}
+@keyframes fall{to{transform:translateY(110vh) rotate(540deg)}}
+.gate{background:#fff;border-radius:22px;padding:22px;max-width:360px;width:100%;margin-top:40px;text-align:center;box-shadow:var(--shadow)}
+.startbtn{font:700 26px Fredoka;padding:18px 36px;margin-top:20px}
+</style>
+</head>
+<body>
+<div class="top"><div class="wrap">
+  <a class="brand" href="/"><div class="logo">🎒</div><span>Kid<b>Smart</b></span></a>
+  <div style="display:flex;gap:8px"><button class="btn g sm" onclick="openAccount()">Account</button><button class="btn g sm" onclick="logout()">Log out</button></div>
+</div></div>
+
+<main class="wrap" id="home">
+  <div id="banner"></div>
+  <h2 class="sec" id="hello">Hello!</h2>
+  <div class="kids" id="kids"></div>
+  <h2 class="sec" id="paySec">Subscription</h2>
+  <div class="card" id="payCard"></div>
+  <div class="card" id="payHist"></div>
+  <p class="small muted" style="text-align:center;margin:24px 0">Tip: for the best voice, use Chrome on Android or Safari on iPhone/iPad, and turn the volume up.</p>
+</main>
+
+<div class="modal" id="modal"><div class="mbox"><button class="x" onclick="closeModal()">×</button><div id="mbody"></div></div></div>
+<div class="toast" id="toast"></div>
+
+<div id="kid">
+  <div class="kbar">
+    <div class="kme"><div class="av" id="kAv"></div><span id="kName"></span></div>
+    <div style="display:flex;gap:8px;align-items:center"><div class="kstars">⭐ <span id="kStars">0</span></div><button class="kexit" onclick="askExit()">Exit</button></div>
+  </div>
+  <div class="kbody" id="kbody"></div>
+</div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const peso = n => '₱' + Number(n || 0).toLocaleString('en-PH', {maximumFractionDigits: 2});
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} }
+const hashTok = (location.hash.match(/t=([^&]+)/) || [])[1];
+let TOKEN = hashTok ? decodeURIComponent(hashTok) : lsGet('ks_parent_token');
+if (hashTok) { lsSet('ks_parent_token', TOKEN); history.replaceState(null, '', '/app'); }
+if (!TOKEN) location.href = '/';
+let CFG = null, ME = null, payPlan = null, payMethod = null, payReceipt = '';
+
+function toast(t) { const e = $('#toast'); e.textContent = t; e.style.display = 'block'; clearTimeout(e._t); e._t = setTimeout(() => e.style.display = 'none', 2600); }
+async function api(url, data) {
+  const o = {headers: {'Content-Type': 'application/json', Authorization: 'Bearer ' + TOKEN}};
+  if (data !== undefined) { o.method = 'POST'; o.body = JSON.stringify(data); }
+  let r, j;
+  try { r = await fetch(url, o); j = await r.json(); } catch (e) { return {ok: false, error: 'Connection problem. Please check your internet.', status: 0}; }
+  if (r.status === 401) { logout(); }
+  j.status = r.status;
+  return j;
+}
+function logout() { lsSet('ks_parent_token', ''); location.href = '/'; }
+function openModal(h) { $('#mbody').innerHTML = h; $('#modal').classList.add('open'); }
+function closeModal() { $('#modal').classList.remove('open'); }
+$('#modal').onclick = e => { if (e.target.id === 'modal') closeModal(); };
+function msg(sel, t, ok) { const m = $(sel); if (!m) return; m.className = 'msg' + (t ? (ok ? ' ok' : ' err') : ''); m.textContent = t || ''; }
+function fmtDate(d) { return d ? new Date(d + 'T00:00:00').toLocaleDateString('en-PH', {month: 'short', day: 'numeric', year: 'numeric'}) : ''; }
+function daysLeft(d) { return Math.round((new Date(d + 'T00:00:00') - new Date(CFG.today + 'T00:00:00')) / 864e5) + 1; }
+
+async function init() {
+  CFG = await (await fetch('/api/public/config')).json();
+  await refresh();
+}
+async function refresh() {
+  const j = await api('/api/me'); if (!j.ok) { if (j.status === 403) document.body.innerHTML = `<div class="wrap" style="padding:40px;text-align:center"><h2>${esc(j.error)}</h2><p><a href="/">Back</a></p></div>`; return; }
+  ME = j; renderHome();
+}
+
+function renderHome() {
+  const p = ME.parent, s = p.subscription;
+  $('#hello').textContent = 'Hello, ' + p.name.split(' ')[0] + '! 👋';
+  let b = '';
+  if (s.state === 'trial') b = `<div class="banner trial"><span>🎁 Free trial: ${daysLeft(s.until)} day(s) left (until ${fmtDate(s.until)})</span><button class="btn c sm" onclick="goPay()">Subscribe</button></div>`;
+  else if (s.state === 'active') b = `<div class="banner active"><span>✅ Subscribed until ${fmtDate(s.until)}</span><button class="btn g sm" onclick="goPay()">Extend</button></div>`;
+  else b = `<div class="banner expired"><span>⏰ Your ${s.until ? 'subscription has ended' : 'trial has ended'}. Subscribe to keep learning.</span><button class="btn c sm" onclick="goPay()">Subscribe now</button></div>`;
+  const pend = ME.payments.find(x => x.status === 'for_verification');
+  if (pend) b += `<div class="banner trial"><span>🕑 We are checking your payment ${esc(pend.code)} (${peso(pend.amount)}). Your plan starts once confirmed.</span></div>`;
+  $('#banner').innerHTML = b;
+  $('#kids').innerHTML = ME.children.map(c => {
+    const pct = Math.min(100, Math.round(c.minutes_today / ME.daily_minutes * 100));
+    return `<div class="kid"><div class="hd"><div class="av">${c.avatar}</div><div><h3>${esc(c.name)}</h3><div class="muted small">${esc(c.grade_name)} · ${c.age} yrs · ⭐ ${c.stars}</div></div>
+      <button class="btn g sm" style="margin-left:auto" onclick="editKid(${c.id})">Edit</button></div>
+      <div class="small muted" style="margin-top:10px">Today: ${c.minutes_today} of ${ME.daily_minutes} min</div><div class="meter"><span style="width:${pct}%"></span></div>
+      <div class="acts"><button class="btn c" onclick="startKid(${c.id})">▶ Start learning</button><button class="btn g" onclick="report(${c.id})">📊 Progress</button></div></div>`;
+  }).join('') + (ME.children.length < ME.max_children ? `<button class="addkid" onclick="editKid()">＋ Add a child</button>` : '');
+  renderPay(); renderHist();
+}
+
+// ---------------- children
+function editKid(id) {
+  const c = ME.children.find(x => x.id === id) || {avatar: CFG.avatars[0], grade: 2, age: 5, lang: 'both'};
+  let av = c.avatar;
+  openModal(`<h3 style="font-size:22px;margin-bottom:14px">${id ? 'Edit child' : 'Add a child'}</h3>
+   <div class="fld"><label>Child's first name or nickname</label><input id="k_name" value="${esc(c.name || '')}"></div>
+   <div class="g2"><div class="fld"><label>Age</label><select id="k_age">${[3,4,5,6,7,8,9,10].map(a => `<option ${a === c.age ? 'selected' : ''}>${a}</option>`).join('')}</select></div>
+   <div class="fld"><label>Grade</label><select id="k_grade">${CFG.levels.map((l, i) => `<option value="${i + 1}" ${i + 1 === c.grade ? 'selected' : ''}>${l}</option>`).join('')}</select></div></div>
+   <div class="fld"><label>Language help</label><select id="k_lang"><option value="both" ${c.lang === 'both' ? 'selected' : ''}>English with Filipino encouragement</option><option value="en" ${c.lang === 'en' ? 'selected' : ''}>English only</option></select></div>
+   <div class="fld"><label>Pick a buddy</label><div class="avs" id="k_av">${CFG.avatars.map(a => `<button type="button" class="${a === av ? 'on' : ''}">${a}</button>`).join('')}</div></div>
+   ${id ? '<label style="display:flex;gap:8px;align-items:center;font-weight:700"><input type="checkbox" id="k_reset" style="width:auto"> Restart levels from the chosen grade</label>' : ''}
+   <div style="display:flex;gap:8px;margin-top:14px;flex-wrap:wrap"><button class="btn c" id="k_save">Save</button>${id ? '<button class="btn g" id="k_del">Remove child</button>' : ''}</div>
+   <div class="msg" id="k_msg"></div>`);
+  $('#k_av').onclick = e => { const b = e.target.closest('button'); if (!b) return; av = b.textContent; $('#k_av').querySelectorAll('button').forEach(x => x.classList.toggle('on', x === b)); };
+  $('#k_save').onclick = async () => {
+    const d = {name: $('#k_name').value, age: $('#k_age').value, grade: $('#k_grade').value, lang: $('#k_lang').value, avatar: av, reset_levels: id ? $('#k_reset').checked : false};
+    const j = await api('/api/children' + (id ? '/' + id : ''), d);
+    if (!j.ok) return msg('#k_msg', j.error);
+    closeModal(); toast('Saved'); refresh();
+  };
+  if (id) $('#k_del').onclick = async () => { if (!confirm('Remove this child? Their progress will be hidden.')) return; const j = await api('/api/children/' + id, {remove: true}); if (j.ok) { closeModal(); refresh(); } };
+}
+
+async function report(id) {
+  const j = await api(`/api/children/${id}/report`); if (!j.ok) return toast(j.error);
+  const c = j.child, mx = Math.max(10, ...j.days.map(d => d.minutes));
+  const subj = id => CFG.subjects.find(s => s.id === id) || {name: id, emoji: '📘', color: '#999'};
+  openModal(`<div style="display:flex;gap:12px;align-items:center"><div class="av">${c.avatar}</div><div><h3 style="font-size:22px">${esc(c.name)}'s progress</h3><div class="muted small">${esc(c.grade_name)} · ⭐ ${c.stars} stars</div></div></div>
+   <h3 style="margin:18px 0 6px;font-size:17px">Minutes learned (last 14 days)</h3>
+   <div class="bars">${j.days.map(d => `<div><span style="height:${Math.round(d.minutes / mx * 100)}%" title="${d.minutes} min"></span>${d.day.slice(8)}</div>`).join('')}</div>
+   <h3 style="margin:18px 0 6px;font-size:17px">Subjects</h3>
+   ${c.subjects.map(s => `<div class="subrow"><div class="e" style="background:${s.color}22">${s.emoji}</div><div style="flex:1"><b>${esc(s.name)}</b><div class="small muted">Level: ${esc(s.level_name)} · ${s.rounds} rounds${s.accuracy !== null ? ' · ' + s.accuracy + '% correct' : ''}</div></div><div>⭐ ${s.stars}</div></div>`).join('')}
+   <h3 style="margin:18px 0 6px;font-size:17px">Needs more practice</h3>
+   ${j.weak_skills.length ? j.weak_skills.map(w => `<span class="badge bg-yellow" style="margin:0 4px 6px 0">${subj(w.subject).emoji} ${esc(w.skill)} (${w.n})</span>`).join('') : '<div class="muted small">Nothing yet. Keep going!</div>'}
+   ${j.mistakes.length ? `<table style="margin-top:10px"><tr><th>Question</th><th>Answered</th><th>Right answer</th></tr>${j.mistakes.slice(0, 8).map(m => `<tr><td>${esc(m.prompt)}</td><td>${esc(m.given)}</td><td><b>${esc(m.correct_answer)}</b></td></tr>`).join('')}</table>` : ''}
+   <p class="small muted" style="margin-top:14px">Tip: practice these together using things at home - count spoons, read labels at the sari-sari store, spot letters on signs.</p>`);
+}
+
+// ---------------- payments
+function goPay() { $('#paySec').scrollIntoView({behavior: 'smooth'}); }
+function renderPay() {
+  const S = CFG.settings;
+  const ways = [['gcash', 'GCash', S.gcash_number, S.gcash_name], ['maya', 'Maya', S.maya_number, S.maya_name], ['bank', 'Bank', S.bank_acct_no, (S.bank_name || '') + ' · ' + (S.bank_acct_name || '')]].filter(w => w[2]);
+  if (!payPlan) payPlan = CFG.plans[0];
+  $('#payCard').innerHTML = `<b>Choose a plan</b> <span class="small muted">(covers all your children)</span>
+   <div class="plans" style="margin-top:10px">${CFG.plans.map(p => `<div class="plan ${payPlan && p.id === payPlan.id ? 'on' : ''}" data-id="${p.id}"><div>${esc(p.name)}</div><b>${peso(p.price)}</b><div class="small muted">${p.days} days</div></div>`).join('')}</div>
+   ${ways.length ? `<label>How will you pay?</label><div class="toggles" id="payWays">${ways.map(w => `<button class="tog ${payMethod === w[0] ? 'on' : ''}" data-m="${w[0]}">${w[1]}</button>`).join('')}</div>
+     <div id="payInfo"></div>
+     <div class="g2" style="margin-top:10px"><div class="fld"><label>Reference number</label><input id="p_ref"></div><div class="fld"><label>Receipt screenshot</label><input type="file" id="p_rc" accept="image/*"></div></div>
+     <button class="btn c" id="p_send">Send payment</button><div class="msg" id="p_msg"></div>`
+   : `<div class="paybox">Online payment details are not set up yet. Please contact us: ${esc(S.phone || '')}</div>`}`;
+  $('#payCard').querySelector('.plans').onclick = e => { const d = e.target.closest('.plan'); if (!d) return; payPlan = CFG.plans.find(p => p.id === Number(d.dataset.id)); renderPay(); };
+  if (!ways.length) return;
+  const info = () => { const w = ways.find(x => x[0] === payMethod); $('#payInfo').innerHTML = w ? `<div class="paybox">Send <b>${peso(payPlan.price)}</b> to ${w[1]}: <b>${esc(w[2])}</b><br>${esc(w[3])}</div>` : ''; };
+  $('#payWays').onclick = e => { const b = e.target.closest('.tog'); if (!b) return; payMethod = b.dataset.m; $('#payWays').querySelectorAll('.tog').forEach(x => x.classList.toggle('on', x === b)); info(); };
+  info();
+  $('#p_rc').onchange = async () => { payReceipt = await shrink($('#p_rc').files[0]); };
+  $('#p_send').onclick = async () => {
+    if (!payMethod) return msg('#p_msg', 'Choose how you paid');
+    if (!payReceipt) return msg('#p_msg', 'Attach your receipt screenshot');
+    $('#p_send').disabled = true;
+    const j = await api('/api/payments', {plan_id: payPlan.id, method: payMethod, ref: $('#p_ref').value, receipt: payReceipt});
+    $('#p_send').disabled = false;
+    if (!j.ok) return msg('#p_msg', j.error);
+    payReceipt = ''; toast('Payment sent! We will confirm soon.'); refresh();
+  };
+}
+function renderHist() {
+  const P = ME.payments;
+  const B = {for_verification: ['Checking', 'bg-yellow'], paid: ['Confirmed', 'bg-green'], rejected: ['Not accepted', 'bg-red']};
+  $('#payHist').innerHTML = `<b>Payment history</b>` + (P.length ? `<table style="margin-top:8px"><tr><th>Date</th><th>Plan</th><th>Amount</th><th>Status</th></tr>${P.map(p => `<tr><td>${esc(p.created_at.slice(0, 10))}</td><td>${esc(p.plan_name)}</td><td>${peso(p.amount)}</td><td><span class="badge ${B[p.status][1]}">${B[p.status][0]}</span></td></tr>`).join('')}</table>` : '<div class="small muted" style="margin-top:6px">No payments yet.</div>');
+}
+function shrink(file) {
+  return new Promise(res => {
+    if (!file) return res('');
+    const rd = new FileReader();
+    rd.onload = () => { const im = new Image(); im.onload = () => { const k = Math.min(1, 1200 / Math.max(im.width, im.height)); const cv = document.createElement('canvas'); cv.width = im.width * k; cv.height = im.height * k; cv.getContext('2d').drawImage(im, 0, 0, cv.width, cv.height); res(cv.toDataURL('image/jpeg', .72)); }; im.onerror = () => res(''); im.src = rd.result; };
+    rd.readAsDataURL(file);
+  });
+}
+function openAccount() {
+  const p = ME.parent;
+  openModal(`<h3 style="font-size:22px;margin-bottom:14px">Account</h3>
+   <div class="g2"><div class="fld"><label>Name</label><input id="ac_name" value="${esc(p.name)}"></div><div class="fld"><label>Email</label><input id="ac_email" value="${esc(p.email || '')}"></div></div>
+   <div class="fld"><label>Mobile number (login)</label><input value="${esc(p.phone)}" disabled></div>
+   <h3 style="font-size:17px;margin:8px 0">Change password</h3>
+   <div class="g2"><div class="fld"><label>Current password</label><input type="password" id="ac_pw"></div><div class="fld"><label>New password</label><input type="password" id="ac_new"></div></div>
+   <button class="btn c" id="ac_save">Save</button><div class="msg" id="ac_msg"></div>`);
+  $('#ac_save').onclick = async () => {
+    const j = await api('/api/account', {name: $('#ac_name').value, email: $('#ac_email').value, password: $('#ac_pw').value, new_password: $('#ac_new').value});
+    if (!j.ok) return msg('#ac_msg', j.error); closeModal(); toast('Saved'); refresh();
+  };
+}
+
+// ================= KID MODE =================
+let KID = null, R = null, VOICES = [];
+const synth = window.speechSynthesis;
+function loadVoices() { VOICES = synth ? synth.getVoices() : []; }
+if (synth) { loadVoices(); synth.onvoiceschanged = loadVoices; }
+function pickVoice(lang) {
+  const pref = lang === 'fil' ? ['fil-PH', 'fil', 'tl-PH', 'tl'] : ['en-PH', 'en-US', 'en-GB', 'en-AU', 'en'];
+  for (const p of pref) { const v = VOICES.find(v => v.lang && v.lang.replace('_', '-').toLowerCase().startsWith(p.toLowerCase())); if (v) return v; }
+  return VOICES.find(v => /^en/i.test(v.lang)) || null;
+}
+const EMOJI_RE = /[\p{Extended_Pictographic}\u{1F1E6}-\u{1F1FF}️‍]/gu;
+function personal(t) { return String(t || '').replace(/\{name\}/g, KID ? KID.name : ''); }
+function speak(text, lang) {
+  return new Promise(res => {
+    const t = personal(text).replace(EMOJI_RE, ' ').replace(/_+/g, ' blank ').replace(/\s+/g, ' ').trim();
+    $('#owl') && $('#owl').classList.add('talk');
+    const done = () => { $('#owl') && $('#owl').classList.remove('talk'); res(); };
+    if (!synth || !t) return setTimeout(done, 300);
+    synth.cancel();
+    const u = new SpeechSynthesisUtterance(t);
+    const v = pickVoice(lang); if (v) { u.voice = v; u.lang = v.lang; } else u.lang = lang === 'fil' ? 'fil-PH' : 'en-US';
+    u.rate = lang === 'fil' ? .9 : .92; u.pitch = 1.08;
+    let finished = false; const fin = () => { if (!finished) { finished = true; done(); } };
+    u.onend = fin; u.onerror = fin;
+    setTimeout(fin, 1500 + t.length * 85);
+    synth.speak(u);
+  });
+}
+let AC = null;
+function beep(ok) {
+  try {
+    AC = AC || new (window.AudioContext || window.webkitAudioContext)();
+    const notes = ok ? [660, 880, 1100] : [300, 220];
+    notes.forEach((f, i) => { const o = AC.createOscillator(), g = AC.createGain(); o.frequency.value = f; o.type = 'sine';
+      g.gain.setValueAtTime(.15, AC.currentTime + i * .11); g.gain.exponentialRampToValueAtTime(.001, AC.currentTime + i * .11 + .2);
+      o.connect(g); g.connect(AC.destination); o.start(AC.currentTime + i * .11); o.stop(AC.currentTime + i * .11 + .22); });
+  } catch (e) {}
+}
+function confetti() {
+  const box = document.createElement('div'); box.className = 'confetti';
+  const cols = ['#FF6B5B', '#FFB627', '#20A99A', '#4C8DF6', '#9B5DE5'];
+  for (let i = 0; i < 50; i++) { const p = document.createElement('i'); p.style.left = Math.random() * 100 + '%'; p.style.background = cols[i % 5]; p.style.animationDelay = Math.random() * .5 + 's'; box.appendChild(p); }
+  document.body.appendChild(box); setTimeout(() => box.remove(), 2200);
+}
+const kb = () => $('#kbody');
+function kidStars() { $('#kStars').textContent = KID ? KID.stars : 0; }
+
+function startKid(id) {
+  KID = JSON.parse(JSON.stringify(ME.children.find(c => c.id === id)));
+  $('#kAv').textContent = KID.avatar; $('#kName').textContent = KID.name; kidStars();
+  $('#kid').classList.add('open'); document.body.style.overflow = 'hidden';
+  kb().innerHTML = `<div class="loading"><div class="owl">🦉</div><div class="big">Hi ${esc(KID.name)}!</div><p class="muted" style="font-weight:700">I am ${esc(CFG.settings.tutor_name)}. Let's learn together!</p>
+    <button class="btn c startbtn" id="goBtn">Let's go! ▶</button></div>`;
+  $('#goBtn').onclick = () => { speak(`Hi {name}! I am ${CFG.settings.tutor_name}. What do you want to learn today?`, 'en'); subjectPicker(); };
+}
+function subjectPicker() {
+  R = null;
+  kb().innerHTML = `<div class="teacher"><div class="owl" id="owl">🦉</div><div class="speech">What do you want to learn today?</div></div>
+   <div class="tiles">${KID.subjects.map(s => `<button class="tile" style="background:${s.color}" data-s="${s.id}"><span class="e">${s.emoji}</span><b>${esc(s.name)}</b><small>${esc(s.level_name)} · ⭐ ${s.stars}</small></button>`).join('')}</div>`;
+  kb().querySelector('.tiles').onclick = e => { const t = e.target.closest('.tile'); if (t) startRound(t.dataset.s); };
+}
+async function startRound(subject) {
+  if (synth) synth.cancel();
+  kb().innerHTML = `<div class="loading"><div class="owl">🦉</div><div class="big">Getting your lesson ready...</div><p class="muted" style="font-weight:700">${esc(CFG.settings.tutor_name)} is thinking</p></div>`;
+  const j = await api('/api/learn/start', {child_id: KID.id, subject});
+  if (!j.ok) return kidNotice(j.error, j.status === 402 ? 'pay' : (j.status === 429 ? 'rest' : 'back'));
+  R = {id: j.round_id, items: j.items, lang: j.lang, i: 0, answers: [], start: Date.now(), subject: j.subject, level: j.level_name, intro: j.intro};
+  await showItem(true);
+}
+function kidNotice(text, kind) {
+  const icon = kind === 'rest' ? '😴' : kind === 'pay' ? '🔒' : '🙈';
+  kb().innerHTML = `<div class="result"><div style="font-size:70px">${icon}</div><div class="big" style="margin:10px 0">${esc(text)}</div>
+    ${kind === 'pay' ? '<p class="muted" style="font-weight:700">Ask a parent to renew the subscription.</p>' : ''}
+    <button class="btn c" style="margin-top:14px" onclick="${kind === 'back' ? 'subjectPicker()' : 'exitKid()'}">${kind === 'back' ? 'Back' : 'OK'}</button></div>`;
+  speak(text, 'en');
+}
+async function showItem(first) {
+  const it = R.items[R.i];
+  const longText = it.text.length > 60 || it.text.includes('\n');
+  const wordy = it.choices.some(c => c.length > 8);
+  const cols = wordy || it.choices.length === 2 ? (it.choices.some(c => c.length > 16) ? 1 : 2) : (it.choices.length === 4 ? 2 : 3);
+  kb().innerHTML = `<div class="dots">${R.items.map((x, k) => `<i class="${k < R.i ? (R.answers[k][0] === R.items[k].answer ? 'ok' : 'no') : (k === R.i ? 'cur' : '')}"></i>`).join('')}</div>
+   <div class="teacher"><div class="owl" id="owl">🦉</div><div class="speech" id="speech">${esc(personal(it.say))}</div><button class="speak" id="again" aria-label="Say it again">🔊</button></div>
+   <div class="qbox ${longText ? 'long' : ''}">${esc(it.text)}</div>
+   <div class="choices" style="grid-template-columns:repeat(${cols},1fr)">${it.choices.map((c, k) => `<button class="choice ${wordy ? 'wordy' : ''}" data-k="${k}">${esc(c)}</button>`).join('')}</div>`;
+  $('#again').onclick = () => speak(it.say, R.lang);
+  const box = kb().querySelector('.choices');
+  let locked = false;
+  box.onclick = async e => {
+    const b = e.target.closest('.choice'); if (!b || locked) return;
+    locked = true;
+    const k = Number(b.dataset.k), ok = k === it.answer;
+    R.answers[R.i] = [k];
+    box.querySelectorAll('.choice').forEach(x => x.disabled = true);
+    if (ok) { b.classList.add('ok'); beep(true); KID.stars++; kidStars(); $('#speech').textContent = personal(it.correct); await speak(it.correct, R.lang); }
+    else { b.classList.add('no'); beep(false); box.querySelector(`[data-k="${it.answer}"]`).classList.add('ok'); $('#speech').textContent = personal(it.wrong); await speak(it.wrong, R.lang); await new Promise(r => setTimeout(r, 600)); }
+    R.i++;
+    if (R.i < R.items.length) showItem(false); else finishRound();
+  };
+  if (first && R.intro) { $('#speech').textContent = personal(R.intro); await speak(R.intro, R.lang); $('#speech').textContent = personal(it.say); }
+  speak(it.say, R.lang);
+}
+async function finishRound() {
+  const secs = Math.round((Date.now() - R.start) / 1000);
+  const j = await api('/api/learn/finish', {round_id: R.id, answers: R.answers, seconds: secs});
+  if (!j.ok) return kidNotice(j.error, 'back');
+  const sub = KID.subjects.find(s => s.id === R.subject.id);
+  if (sub) { sub.level_name = j.level_name; sub.stars += j.stars; }
+  const fil = R.lang === 'fil';
+  let line = j.correct === j.total ? (fil ? 'Perpekto! Ang galing mo, {name}!' : 'Perfect score! You are amazing, {name}!')
+    : j.correct >= 3 ? (fil ? 'Magaling, {name}! Tuloy lang!' : 'Great work, {name}! Keep it up!')
+    : (fil ? 'Magaling ang pagsubok! Practice tayo ulit.' : 'Good try, {name}! Practice makes us better.');
+  if (j.level_change > 0) line += fil ? ` Level up! Ikaw ay nasa ${j.level_name} na.` : ` Level up! You are now at ${j.level_name}.`;
+  if (j.correct >= 4) confetti();
+  kb().innerHTML = `<div class="teacher"><div class="owl" id="owl">🦉</div><div class="speech">${esc(personal(line))}</div></div>
+   <div class="result"><div class="big">${j.correct} out of ${j.total}</div><div class="st">${'⭐'.repeat(j.correct)}${'☆'.repeat(j.total - j.correct)}</div>
+   ${j.level_change > 0 ? `<div class="banner active" style="justify-content:center">🚀 Level up! Now: ${esc(j.level_name)}</div>` : ''}
+   <div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:16px">
+    ${j.can_continue ? `<button class="btn c startbtn" style="margin:0" onclick="startRound('${R.subject.id}')">Play again ▶</button><button class="btn g startbtn" style="margin:0" onclick="subjectPicker()">Other subject</button>`
+      : `<button class="btn t startbtn" style="margin:0" onclick="restScreen()">Done for today</button>`}</div>
+   ${j.can_continue ? `<p class="muted small" style="font-weight:700;margin-top:12px">${j.minutes_left} minutes left today</p>` : ''}</div>`;
+  await speak(line, R.lang);
+}
+function restScreen() { kidNotice('Great work today! Time to rest your eyes. See you tomorrow!', 'rest'); }
+
+let GATE = 0;
+function askExit() {
+  if (synth) synth.cancel();
+  const a = 4 + Math.floor(Math.random() * 6), b = 5 + Math.floor(Math.random() * 5); GATE = a + b;
+  kb().innerHTML = `<div class="gate"><h3>For parents</h3><p class="muted" style="font-weight:700">To leave, answer: what is ${a} + ${b}?</p>
+    <input id="gateIn" inputmode="numeric" style="text-align:center;font-size:24px"><div style="display:flex;gap:8px;margin-top:12px;justify-content:center">
+    <button class="btn c" onclick="checkGate()">Exit</button><button class="btn g" onclick="${R ? 'showItem(false)' : 'subjectPicker()'}">Back</button></div></div>`;
+  setTimeout(() => $('#gateIn').focus(), 50);
+}
+function checkGate() { if (Number($('#gateIn').value) === GATE) exitKid(); else { $('#gateIn').value = ''; $('#gateIn').placeholder = 'Try again'; } }
+function exitKid() { if (synth) synth.cancel(); $('#kid').classList.remove('open'); document.body.style.overflow = ''; KID = null; R = null; refresh(); }
+
+init();
+</script>
+</body>
+</html>

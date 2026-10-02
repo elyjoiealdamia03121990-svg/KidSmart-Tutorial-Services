@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>KidSmart AI Tutor</title>
+<meta name="description" content="A friendly AI tutor for Filipino kids from Preschool to Grade 4. Reading, Math, Filipino, Science and more - by voice and tap.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#FFF8EE;--card:#fff;--ink:#1E2944;--muted:#5D6785;--line:#EEE3D2;--sun:#FFB627;--sun-soft:#FFF0CC;
+  --coral:#FF6B5B;--coral-soft:#FFE3DF;--teal:#20A99A;--teal-soft:#D9F3EF;--sky:#4C8DF6;--sky-soft:#E1ECFE;--grape:#9B5DE5;
+  --shadow:0 6px 24px rgba(30,41,68,.08)}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Nunito,system-ui,sans-serif}
+h1,h2,h3,.brand{font-family:Fredoka,Nunito,sans-serif;line-height:1.15;margin:0}
+.wrap{max-width:1100px;margin:0 auto;padding:0 18px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:999px;padding:13px 24px;font:800 16px Nunito,sans-serif;cursor:pointer;text-decoration:none;transition:transform .12s,box-shadow .12s}
+.btn:active{transform:translateY(1px)}
+.btn-primary{background:var(--coral);color:#fff;box-shadow:0 4px 0 #D94F40}
+.btn-primary:hover{transform:translateY(-1px);box-shadow:0 6px 0 #D94F40}
+.btn-ghost{background:#fff;color:var(--ink);border:2px solid var(--ink)}
+.btn-sm{padding:9px 16px;font-size:14px}
+.btn[disabled]{opacity:.55}
+nav{position:sticky;top:0;z-index:20;background:rgba(255,248,238,.93);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;height:64px;gap:10px}
+.brand{font-size:22px;font-weight:700;display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink)}
+.logo{width:36px;height:36px;border-radius:12px;background:var(--sun);display:grid;place-items:center;font-size:20px;transform:rotate(-6deg)}
+.brand b{color:var(--coral)}
+.navr{display:flex;gap:16px;align-items:center;font-weight:700}
+.navr a{color:var(--muted);text-decoration:none}
+.navr a.btn{color:#fff}
+@media(max-width:700px){.navr .hm{display:none}}
+.hero{padding:52px 0 36px}
+.hero .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:36px;align-items:center}
+.pill{display:inline-block;background:var(--teal-soft);color:#0F7A6E;font-weight:800;font-size:13px;padding:6px 14px;border-radius:999px;margin-bottom:14px}
+.hero h1{font-size:clamp(34px,5.4vw,56px)}
+.hero h1 em{font-style:normal;color:var(--coral)}
+.lead{font-size:18px;color:var(--muted);margin:18px 0 24px;max-width:540px}
+.ctas{display:flex;gap:12px;flex-wrap:wrap}
+.small{font-size:14px;color:var(--muted);margin-top:12px}
+/* phone mock */
+.phone{width:290px;max-width:100%;justify-self:center;background:var(--ink);border-radius:38px;padding:12px;box-shadow:0 20px 50px rgba(30,41,68,.25);transform:rotate(2deg)}
+.screen{background:linear-gradient(180deg,#FFF3D6,#FFE6DA);border-radius:28px;padding:18px 14px;min-height:470px;display:flex;flex-direction:column;gap:12px}
+.tbar{display:flex;align-items:center;gap:10px}
+.kiko{width:52px;height:52px;border-radius:50%;background:var(--sun);display:grid;place-items:center;font-size:30px;flex:none}
+.bubble{background:#fff;border-radius:16px 16px 16px 4px;padding:10px 12px;font-weight:700;font-size:14px;box-shadow:var(--shadow)}
+.qcard{background:#fff;border-radius:18px;padding:16px;text-align:center;font:700 28px Fredoka;box-shadow:var(--shadow)}
+.qcard small{display:block;font:700 13px Nunito;color:var(--muted);margin-top:6px}
+.ch{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px}
+.ch div{background:#fff;border-radius:16px;padding:16px 0;text-align:center;font:700 26px Fredoka;box-shadow:0 4px 0 #E8DCC8}
+.ch div.ok{background:var(--teal);color:#fff;box-shadow:0 4px 0 #148073}
+.stars{text-align:center;font-size:22px;letter-spacing:3px}
+@media(max-width:820px){.hero .wrap{grid-template-columns:1fr}.phone{order:-1;transform:none;width:260px}}
+section{padding:54px 0}
+.sh{text-align:center;max-width:660px;margin:0 auto 32px}
+.sh h2{font-size:clamp(28px,4vw,38px)}
+.sh p{color:var(--muted);margin:10px 0 0}
+.feat{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.f{background:#fff;border-radius:18px;padding:22px;box-shadow:var(--shadow)}
+.f .i{font-size:30px;margin-bottom:8px}
+.f h3{font-size:19px;margin-bottom:6px}
+.f p{margin:0;color:var(--muted);font-size:15px}
+@media(max-width:820px){.feat{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.feat{grid-template-columns:1fr}}
+.subs{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.sb{border-radius:18px;padding:18px;color:#fff;box-shadow:var(--shadow)}
+.sb .e{font-size:30px}
+.sb h3{font-size:20px;margin:6px 0 2px}
+.sb p{margin:0;font-weight:700;opacity:.95;font-size:14px}
+@media(max-width:820px){.subs{grid-template-columns:1fr 1fr}}
+.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:16px;max-width:860px;margin:0 auto}
+.price{background:#fff;border-radius:18px;padding:24px;box-shadow:var(--shadow);border:2px solid transparent;display:flex;flex-direction:column;position:relative}
+.price.best{border-color:var(--coral)}
+.price.best::before{content:"Best value";position:absolute;top:-12px;left:20px;background:var(--coral);color:#fff;font-size:12px;font-weight:800;padding:3px 10px;border-radius:999px}
+.price h3{font-size:20px}
+.amt{font:700 36px Fredoka;margin:8px 0 0}
+.per{color:var(--muted);font-weight:700;font-size:14px}
+.price p{color:var(--muted);font-size:15px;flex:1}
+.note{background:var(--sun-soft);border-radius:14px;padding:14px 18px;margin:20px auto 0;max-width:860px;font-size:15px}
+details{background:#fff;border-radius:14px;padding:16px 18px;margin-bottom:10px;box-shadow:var(--shadow)}
+summary{font-weight:800;cursor:pointer}
+details p{color:var(--muted);margin:10px 0 0}
+footer{background:var(--ink);color:#C9D0E3;padding:34px 0;font-size:15px}
+footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px}
+footer b{color:#fff}
+/* auth modal */
+.modal{position:fixed;inset:0;background:rgba(30,41,68,.5);display:none;align-items:center;justify-content:center;padding:16px;z-index:50}
+.modal.open{display:flex}
+.mbox{background:#fff;border-radius:22px;padding:26px;width:100%;max-width:420px;position:relative;max-height:95vh;overflow:auto}
+.x{position:absolute;right:14px;top:10px;border:0;background:none;font-size:28px;color:var(--muted);cursor:pointer}
+.tabs{display:flex;background:var(--bg);border-radius:12px;padding:4px;margin:14px 0 16px}
+.tabs button{flex:1;border:0;background:none;padding:9px;border-radius:9px;font:800 15px Nunito,sans-serif;color:var(--muted);cursor:pointer}
+.tabs button.on{background:#fff;color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.08)}
+label{display:block;font-weight:800;font-size:14px;margin-bottom:5px}
+label small{font-weight:600;color:var(--muted)}
+input{width:100%;padding:12px 14px;border:2px solid var(--line);border-radius:12px;font:600 16px Nunito,sans-serif;color:var(--ink)}
+input:focus{outline:none;border-color:var(--teal)}
+.fld{margin-bottom:12px}
+.msg{display:none;margin-top:10px;padding:10px 12px;border-radius:12px;font-weight:700}
+.msg.err{display:block;background:var(--coral-soft);color:#A9302A}
+</style>
+</head>
+<body>
+<nav><div class="wrap">
+  <a class="brand" href="#"><div class="logo">🎒</div><span>Kid<b>Smart</b></span></a>
+  <div class="navr"><a class="hm" href="#how">How it works</a><a class="hm" href="#pricing">Pricing</a>
+    <a href="#" onclick="openAuth('login');return false">Log in</a><a class="btn btn-primary btn-sm" href="#" onclick="openAuth('register');return false">Try free</a></div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <div>
+    <div class="pill" id="tagline">A friendly AI tutor for Preschool to Grade 4</div>
+    <h1>A tutor that <em>talks, listens to taps,</em> and never runs out of patience.</h1>
+    <p class="lead"><b class="tname">Teacher Kiko</b> reads every question out loud, shows big pictures, and adjusts each lesson to your child's level - in English and Filipino. Your child just taps the answer.</p>
+    <div class="ctas"><a class="btn btn-primary" href="#" onclick="openAuth('register');return false">Start <span class="trialDays">3</span>-day free trial</a><a class="btn btn-ghost" href="#pricing">See prices</a></div>
+    <div class="small">No card needed for the trial. Works on any phone, tablet or laptop with a browser.</div>
+  </div>
+  <div class="phone" aria-hidden="true"><div class="screen">
+    <div class="tbar"><div class="kiko">🦉</div><div class="bubble">Bee starts with what letter?</div></div>
+    <div class="qcard">🐝 bee<small>Tap the right letter</small></div>
+    <div class="ch"><div>D</div><div class="ok">B</div><div>P</div></div>
+    <div class="bubble" style="border-radius:16px 16px 4px 16px;align-self:flex-end;background:var(--teal-soft)">Great job! Bee starts with B. 🎉</div>
+    <div class="stars">⭐⭐⭐☆☆</div>
+  </div></div>
+</div></header>
+
+<section id="how"><div class="wrap">
+  <div class="sh"><h2>Why kids love it</h2><p>Made for little learners who cannot type yet.</p></div>
+  <div class="feat">
+    <div class="f"><div class="i">🗣️</div><h3>It speaks to your child</h3><p>Every question and every hint is read aloud, so even preschoolers can learn on their own.</p></div>
+    <div class="f"><div class="i">👆</div><h3>Just tap</h3><p>Big picture buttons. No typing, no confusing menus, no ads.</p></div>
+    <div class="f"><div class="i">🧠</div><h3>Learns your child's level</h3><p>Too easy? It goes up. Too hard? It slows down and practices the mistakes again.</p></div>
+    <div class="f"><div class="i">🇵🇭</div><h3>English and Filipino</h3><p>Lessons use things kids know: mangga, jeepney, pesos, sari-sari store.</p></div>
+    <div class="f"><div class="i">⏱️</div><h3>Healthy screen time</h3><p>Short 5-question rounds with a daily time limit you can trust.</p></div>
+    <div class="f"><div class="i">📊</div><h3>Parent dashboard</h3><p>See minutes learned, level per subject, and exactly which skills need practice.</p></div>
+  </div>
+</div></section>
+
+<section style="padding-top:10px"><div class="wrap">
+  <div class="sh"><h2>Subjects</h2><p>From Preschool to Grade 4. The app picks the right level for your child.</p></div>
+  <div class="subs" id="subjects"></div>
+</div></section>
+
+<section id="pricing"><div class="wrap">
+  <div class="sh"><h2>Simple pricing</h2><p>One subscription covers up to <span class="maxKids">3</span> children in your family.</p></div>
+  <div class="prices" id="plans"></div>
+  <div class="note"><b>How to pay:</b> start your free trial, then choose a plan inside the app and pay by <span id="payWays">GCash, Maya or bank transfer</span>. Upload your receipt and we activate your plan, usually within the day.</div>
+</div></section>
+
+<section><div class="wrap" style="max-width:760px">
+  <div class="sh"><h2>Questions</h2></div>
+  <details><summary>Is the AI safe for my child?</summary><p>The tutor only talks about the lesson. There is no open chat, it never asks for personal information, and your child's name stays on your device. We still recommend a parent nearby, especially for the little ones.</p></details>
+  <details><summary>What device do we need?</summary><p>Any phone, tablet or computer with Chrome, Safari or Edge, and the sound turned on. Tablets are best for small hands.</p></details>
+  <details><summary>How long should my child use it?</summary><p>About 15 to 30 minutes a day is plenty. The app stops for the day once the daily limit is reached.</p></details>
+  <details><summary>Does it replace school?</summary><p>No. It is practice and support at home - like a patient tutor who helps your child keep up and build confidence.</p></details>
+  <details><summary>I forgot my password.</summary><p>Message us using the contact details below and we will reset it for you.</p></details>
+</div></section>
+
+<footer><div class="wrap">
+  <div><b class="bizName">KidSmart AI Tutor</b><br><span id="footTag"></span></div>
+  <div id="contact"></div>
+  <div><a href="/admin" style="color:#8E97B3;font-size:13px">Staff</a></div>
+</div></footer>
+
+<div class="modal" id="auth"><div class="mbox">
+  <button class="x" onclick="closeAuth()">×</button>
+  <h3 style="font-size:24px" id="authTitle">Welcome!</h3>
+  <div class="tabs"><button data-t="register">Create account</button><button data-t="login">Log in</button></div>
+  <div id="regFields">
+    <div class="fld"><label>Parent / guardian name</label><input id="r_name" autocomplete="name"></div>
+    <div class="fld"><label>Email <small>(optional)</small></label><input id="r_email" type="email" autocomplete="email"></div>
+  </div>
+  <div class="fld"><label>Mobile number</label><input id="a_phone" inputmode="tel" placeholder="09XX XXX XXXX" autocomplete="tel"></div>
+  <div class="fld"><label>Password <small id="pwHint">(at least 6 characters)</small></label><input id="a_pw" type="password"></div>
+  <button class="btn btn-primary" style="width:100%" id="authBtn">Start free trial</button>
+  <div class="msg" id="authMsg"></div>
+  <p class="small" id="authNote">By creating an account you agree that a parent or guardian manages this account and supervises the child.</p>
+</div></div>
+
+<script>
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const peso = n => '₱' + Number(n || 0).toLocaleString('en-PH', {maximumFractionDigits: 2});
+function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
+function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
+let mode = 'register';
+
+if (lsGet('ks_parent_token')) document.querySelectorAll('.navr a')[2].outerHTML = '<a href="/app">My account</a>';
+
+async function load() {
+  const j = await (await fetch('/api/public/config')).json();
+  const S = j.settings;
+  document.title = S.business_name;
+  document.querySelectorAll('.bizName').forEach(e => e.textContent = S.business_name);
+  document.querySelectorAll('.tname').forEach(e => e.textContent = S.tutor_name);
+  document.querySelectorAll('.trialDays').forEach(e => e.textContent = S.trial_days);
+  document.querySelectorAll('.maxKids').forEach(e => e.textContent = S.max_children);
+  $('#tagline').textContent = S.tagline; $('#footTag').textContent = S.tagline;
+  $('#contact').innerHTML = [S.phone && '📞 ' + esc(S.phone), S.email && '✉️ ' + esc(S.email),
+    S.facebook && `<a href="${esc(S.facebook)}" target="_blank" rel="noopener" style="color:#fff">Facebook page</a>`].filter(Boolean).join('<br>');
+  const ways = [S.gcash_number && 'GCash', S.maya_number && 'Maya', S.bank_acct_no && 'bank transfer'].filter(Boolean);
+  if (ways.length) $('#payWays').textContent = ways.join(', ');
+  $('#subjects').innerHTML = j.subjects.map(s => `<div class="sb" style="background:${s.color}"><div class="e">${s.emoji}</div><h3>${esc(s.name)}</h3>
+    <p>${esc(j.levels[s.min - 1])}${s.max > s.min ? ' to ' + esc(j.levels[s.max - 1]) : ''}</p></div>`).join('');
+  const base = j.plans.length ? j.plans[0].price / j.plans[0].days : 0;
+  $('#plans').innerHTML = j.plans.map((p, i) => `<div class="price ${i === 1 ? 'best' : ''}"><h3>${esc(p.name)}</h3>
+    <div class="amt">${peso(p.price)}</div><div class="per">${p.days} days · about ${peso(p.price / p.days * 30)}/month</div>
+    <p>${esc(p.description || '')}</p><a class="btn btn-ghost btn-sm" href="#" onclick="openAuth('register');return false">Start free trial</a></div>`).join('');
+}
+
+function openAuth(m) { setMode(m); $('#auth').classList.add('open'); setTimeout(() => (m === 'login' ? $('#a_phone') : $('#r_name')).focus(), 50); }
+function closeAuth() { $('#auth').classList.remove('open'); }
+function setMode(m) {
+  mode = m;
+  document.querySelectorAll('.tabs button').forEach(b => b.classList.toggle('on', b.dataset.t === m));
+  $('#regFields').hidden = m !== 'register'; $('#authNote').hidden = m !== 'register'; $('#pwHint').hidden = m !== 'register';
+  $('#authTitle').textContent = m === 'register' ? 'Start your free trial' : 'Welcome back!';
+  $('#authBtn').textContent = m === 'register' ? 'Start free trial' : 'Log in';
+  $('#authMsg').className = 'msg';
+}
+document.querySelectorAll('.tabs button').forEach(b => b.onclick = () => setMode(b.dataset.t));
+$('#auth').onclick = e => { if (e.target.id === 'auth') closeAuth(); };
+$('#authBtn').onclick = async () => {
+  const btn = $('#authBtn'); btn.disabled = true;
+  const data = {phone: $('#a_phone').value, password: $('#a_pw').value};
+  if (mode === 'register') Object.assign(data, {name: $('#r_name').value, email: $('#r_email').value});
+  let j;
+  try { j = await (await fetch('/api/auth/' + mode, {method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(data)})).json(); }
+  catch (e) { j = {ok: false, error: 'Connection problem. Please try again.'}; }
+  btn.disabled = false;
+  if (!j.ok) { const m = $('#authMsg'); m.className = 'msg err'; m.textContent = j.error; return; }
+  lsSet('ks_parent_token', j.token);
+  location.href = '/app#t=' + encodeURIComponent(j.token);
+};
+document.addEventListener('keydown', e => { if (e.key === 'Enter' && $('#auth').classList.contains('open')) $('#authBtn').click(); if (e.key === 'Escape') closeAuth(); });
+load();
+</script>
+</body>
+</html>
